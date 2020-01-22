@@ -1,0 +1,5 @@
+com.unity3d.player
+string lib_name
+style BaseUnityTheme
+style UnityThemeSelector
+style UnityThemeSelector_Translucent

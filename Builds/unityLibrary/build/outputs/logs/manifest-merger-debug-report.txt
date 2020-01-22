@@ -1,0 +1,133 @@
+-- Merging decision tree log ---
+manifest
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:1-24:12
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:1-24:12
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:1-24:12
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:1-24:12
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:1-24:12
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:1-24:12
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:1-24:12
+	package
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:70-98
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:1-24:12
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:99-145
+	android:versionCode
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:1-24:12
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:11-69
+	android:installLocation
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:3:146-176
+application
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:4:3-18:17
+activity#com.unity3d.player.UnityPlayerActivity
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:5:5-12:16
+	android:screenOrientation
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:5:134-171
+	android:launchMode
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:5:172-203
+	android:hardwareAccelerated
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:5:306-341
+	android:configChanges
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:5:204-305
+	android:theme
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:5:69-133
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:5:15-68
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.INFO
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:6:7-9:23
+action#android.intent.action.MAIN
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:7:9-61
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:7:17-58
+category#android.intent.category.INFO
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:8:9-65
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:8:19-62
+meta-data#unityplayer.UnityActivity
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:10:7-82
+	android:value
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:10:59-79
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:10:18-58
+meta-data#android.notch_support
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:11:7-78
+	android:value
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:11:55-75
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:11:18-54
+meta-data#unity.splash-mode
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:13:5-69
+	android:value
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:13:49-66
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:13:16-48
+meta-data#unity.splash-enable
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:14:5-75
+	android:value
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:14:51-72
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:14:16-50
+meta-data#notch.config
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:15:5-81
+	android:value
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:15:44-78
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:15:16-43
+meta-data#unity.build-id
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:16:5-101
+	android:value
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:16:46-98
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:16:16-45
+meta-data#com.samsung.android.vr.application.mode
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:17:5-97
+	android:value
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:17:71-94
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:17:16-70
+uses-permission#android.permission.INTERNET
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:19:3-65
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:19:20-62
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:20:3-69
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:20:20-66
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:21:3-78
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:21:20-75
+uses-permission#android.permission.BLUETOOTH
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:22:3-66
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:22:20-63
+uses-feature#android.hardware.vr.headtracking
+ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:23:3-111
+	android:version
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:23:89-108
+	android:required
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:23:65-88
+	android:name
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml:23:17-64
+uses-sdk
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml
+		INJECTED from G:\Unity\Flash VR\Builds\unityLibrary\src\main\AndroidManifest.xml

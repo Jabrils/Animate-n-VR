@@ -1,0 +1,4 @@
+#Thu Sep 26 13:25:00 PDT 2019
+base.0=G\:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\transforms\\dexMerger\\release\\0
+path.0=classes.dex
+renamed.0=classes.dex
