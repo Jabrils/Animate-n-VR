@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class ctrl : MonoBehaviour
     public static Mode mode;
     public static PrimitiveType[] pTypes = new PrimitiveType[] { PrimitiveType.Capsule, PrimitiveType.Cube, PrimitiveType.Cylinder, PrimitiveType.Plane, PrimitiveType.Quad, PrimitiveType.Sphere };
     public static Color[] cols = new Color[] { Color.black, Color.white, Color.red, Color.blue, Color.green, Color.grey, Color.cyan, Color.magenta };
-    public static GameObject sel;
+    public static GameObject sel, grObj;
 
     public static int frame = 0, lastFrame = 10, pType, col;
     public static float fps = 12;
@@ -28,7 +29,7 @@ public class ctrl : MonoBehaviour
 
     LineRenderer grLine;
     OVRGrabber grParent;
-    GameObject grObj, grSel;
+    GameObject grSel;
     Color grLast;
 
     Vector3[] scaleAxises = new Vector3[] { Vector3.one, Vector3.right, Vector3.up, Vector3.forward };
@@ -71,8 +72,8 @@ public class ctrl : MonoBehaviour
             a[i].transform.localPosition = Vector3.down * 1000000000;
         }
 
-        MotionScene.objs[id][0].onionNext = a;
-        MotionScene.objs[id][0].onionPrev = b;
+        //MotionScene.objs[id][0].onionNext = a;
+        //MotionScene.objs[id][0].onionPrev = b;
     }
 
     void Start()
@@ -90,19 +91,16 @@ public class ctrl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        debutInfo = MotionScene.motionObj.Count.ToString();
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             frame++;
-            UpdateAllObjs();
+            //UpdateAllObjs();
         }
 
+        // reset BG color to white
         cam.backgroundColor = Color.white;
-
-        // 
-        if (MotionScene.objs.Count > 1)
-        {
-            debutInfo = MotionScene.objs[1][frame].rot.ToString();
-        }
 
         // 
         if (mode == Mode.Animate)
@@ -117,6 +115,15 @@ public class ctrl : MonoBehaviour
         {
             cam.backgroundColor = Color.grey;
             ModeParenting();
+        }
+    }
+
+    void CopyFrameData()
+    {
+        for (int i = 0; i < MotionScene.motionObj.Count; i++)
+        {
+            MotionScene.motionObj[i].SetObj(frame - 1);
+            MotionScene.motionObj[i].UpdateObj(frame);
         }
     }
 
@@ -140,22 +147,44 @@ public class ctrl : MonoBehaviour
                 // 
                 if (TouchControls.Index[0] || TouchControls.Index[1])
                 {
-                    Destroy(grLine);
-                    // FIND THE RIGHT OBJ TO PARENT
-                    grObj.transform.SetParent(grSel.transform);
+                    // set the parent
+                    grObj.transform.SetParent(grSel.transform.position == grObj.transform.position ? null : grSel.transform);
 
-                    sel.transform.position = Vector3.up * 10000;
-                    grParent = null;
-                    grObj = null;
-                    grSel = null;
-                    mode = Mode.Animate;
+                    EndParenting();
                 }
             }
         }
         else
         {
             sel.transform.position = Vector3.up * 10000;
+
+            // unparent if focused on nothing
+            if (TouchControls.Index[0] || TouchControls.Index[1])
+            {
+                grObj.transform.SetParent(null);
+
+                EndParenting();
+            }
         }
+    }
+
+    void EndParenting()
+    {
+        // We no longer need the line to show where we're pointing
+        Destroy(grLine);
+        // get a reference to the OVR Grabbable for the id
+        OVRGrabbable ovrg = grObj.GetComponent<OVRGrabbable>();
+        // Update that object's data
+        MotionScene.motionObj[ovrg.id].UpdateObj(frame);
+
+        // Reset everything
+        sel.transform.position = Vector3.up * 10000;
+        grParent = null;
+        grObj = null;
+        grSel = null;
+
+        // Change it back to Animate mode
+        mode = Mode.Animate;
     }
 
     void StartParenting(OVRGrabber gr)
@@ -216,15 +245,15 @@ public class ctrl : MonoBehaviour
                 buttBottomReset[i] = true;
             }
 
-            // Remove all onion skins while in play mode
-            for (int j = 0; j < MotionScene.objs.Count; j++)
-            {
-                MotionScene.objs[j][0].onionPrev[i].transform.localPosition = Vector3.down * 1000000000;
-                MotionScene.objs[j][0].onionNext[i].transform.localPosition = Vector3.down * 1000000000;
-            }
+            //// Remove all onion skins while in play mode
+            //for (int j = 0; j < MotionScene.objs.Count; j++)
+            //{
+            //    MotionScene.objs[j][0].onionPrev[i].transform.localPosition = Vector3.down * 1000000000;
+            //    MotionScene.objs[j][0].onionNext[i].transform.localPosition = Vector3.down * 1000000000;
+            //}
         }
 
-        UpdateAllObjs();
+        //UpdateAllObjs();
     }
 
     void ModeAnimate()
@@ -241,16 +270,19 @@ public class ctrl : MonoBehaviour
             if (grabber[0].grabbedObject == null && grabber[1].grabbedObject == null)
             {
                 RawState(i);
-                CopyFrameData();
+
+                // 
+                if (frame > 0 && TouchControls.Index[1])
+                {
+                    CopyFrameData();
+                }
             }
 
             ResetButtons(i);
         }
 
-        // Copy last frame data
-
         // 
-        UpdateOnionSkins();
+        //UpdateOnionSkins();
     }
 
     void GrabbedObjControls(int i)
@@ -288,78 +320,62 @@ public class ctrl : MonoBehaviour
         }
     }
 
-    void CopyFrameData()
-    {
-        if (frame > 0 && TouchControls.Index[1])
-        {
-            for (int j = 0; j < MotionScene.objs.Count; j++)
-            {
-                if (MotionScene.objs[j][0].parent == null)
-                {
-                    MotionScene.objs[j][frame].pos = MotionScene.objs[j][0].obj.transform.localPosition = MotionScene.objs[j][frame - 1].pos;
-                    MotionScene.objs[j][frame].rot = MotionScene.objs[j][0].obj.transform.localEulerAngles = MotionScene.objs[j][frame - 1].rot;
-                    MotionScene.objs[j][frame].scale = MotionScene.objs[j][0].obj.transform.localScale = MotionScene.objs[j][frame - 1].scale;
-                }
-            }
-        }
-    }
+    //void UpdateOnionSkins()
+    //{
+    //    for (int i = 0; i < MotionScene.objs.Count; i++)
+    //    {
+    //        if (MotionScene.objs[i][0].parent == null)
+    //        {
+    //            // Past 0
+    //            if (frame > 0)
+    //            {
+    //                MotionScene.objs[i][0].onionPrev[0].transform.localPosition = MotionScene.objs[i][frame - 1].pos;
+    //                MotionScene.objs[i][0].onionPrev[0].transform.localEulerAngles = MotionScene.objs[i][frame - 1].rot;
+    //                MotionScene.objs[i][0].onionPrev[0].transform.localScale = MotionScene.objs[i][frame - 1].scale;
+    //            }
+    //            else
+    //            {
+    //                MotionScene.objs[i][0].onionPrev[0].transform.localPosition = Vector3.down * 1000000000;
+    //            }
 
-    void UpdateOnionSkins()
-    {
-        for (int i = 0; i < MotionScene.objs.Count; i++)
-        {
-            if (MotionScene.objs[i][0].parent == null)
-            {
-                // Past 0
-                if (frame > 0)
-                {
-                    MotionScene.objs[i][0].onionPrev[0].transform.localPosition = MotionScene.objs[i][frame - 1].pos;
-                    MotionScene.objs[i][0].onionPrev[0].transform.localEulerAngles = MotionScene.objs[i][frame - 1].rot;
-                    MotionScene.objs[i][0].onionPrev[0].transform.localScale = MotionScene.objs[i][frame - 1].scale;
-                }
-                else
-                {
-                    MotionScene.objs[i][0].onionPrev[0].transform.localPosition = Vector3.down * 1000000000;
-                }
+    //            // Past 1
+    //            if (frame > 1)
+    //            {
+    //                MotionScene.objs[i][0].onionPrev[1].transform.localPosition = MotionScene.objs[i][frame - 2].pos;
+    //                MotionScene.objs[i][0].onionPrev[1].transform.localEulerAngles = MotionScene.objs[i][frame - 2].rot;
+    //                MotionScene.objs[i][0].onionPrev[1].transform.localScale = MotionScene.objs[i][frame - 2].scale;
+    //            }
+    //            else
+    //            {
+    //                MotionScene.objs[i][0].onionPrev[1].transform.localPosition = Vector3.down * 1000000000;
+    //            }
 
-                // Past 1
-                if (frame > 1)
-                {
-                    MotionScene.objs[i][0].onionPrev[1].transform.localPosition = MotionScene.objs[i][frame - 2].pos;
-                    MotionScene.objs[i][0].onionPrev[1].transform.localEulerAngles = MotionScene.objs[i][frame - 2].rot;
-                    MotionScene.objs[i][0].onionPrev[1].transform.localScale = MotionScene.objs[i][frame - 2].scale;
-                }
-                else
-                {
-                    MotionScene.objs[i][0].onionPrev[1].transform.localPosition = Vector3.down * 1000000000;
-                }
+    //            // Future 0
+    //            if (frame < lastFrame - 1)
+    //            {
+    //                MotionScene.objs[i][0].onionNext[0].transform.localPosition = MotionScene.objs[i][frame + 1].pos;
+    //                MotionScene.objs[i][0].onionNext[0].transform.localEulerAngles = MotionScene.objs[i][frame + 1].rot;
+    //                MotionScene.objs[i][0].onionNext[0].transform.localScale = MotionScene.objs[i][frame + 1].scale;
+    //            }
+    //            else
+    //            {
+    //                MotionScene.objs[i][0].onionNext[0].transform.localPosition = Vector3.down * 1000000000;
+    //            }
 
-                // Future 0
-                if (frame < lastFrame - 1)
-                {
-                    MotionScene.objs[i][0].onionNext[0].transform.localPosition = MotionScene.objs[i][frame + 1].pos;
-                    MotionScene.objs[i][0].onionNext[0].transform.localEulerAngles = MotionScene.objs[i][frame + 1].rot;
-                    MotionScene.objs[i][0].onionNext[0].transform.localScale = MotionScene.objs[i][frame + 1].scale;
-                }
-                else
-                {
-                    MotionScene.objs[i][0].onionNext[0].transform.localPosition = Vector3.down * 1000000000;
-                }
-
-                // Future 1
-                if (frame < lastFrame - 2)
-                {
-                    MotionScene.objs[i][0].onionNext[1].transform.localPosition = MotionScene.objs[i][frame + 2].pos;
-                    MotionScene.objs[i][0].onionNext[1].transform.localEulerAngles = MotionScene.objs[i][frame + 2].rot;
-                    MotionScene.objs[i][0].onionNext[1].transform.localScale = MotionScene.objs[i][frame + 2].scale;
-                }
-                else
-                {
-                    MotionScene.objs[i][0].onionNext[1].transform.localPosition = Vector3.down * 1000000000;
-                }
-            }
-        }
-    }
+    //            // Future 1
+    //            if (frame < lastFrame - 2)
+    //            {
+    //                MotionScene.objs[i][0].onionNext[1].transform.localPosition = MotionScene.objs[i][frame + 2].pos;
+    //                MotionScene.objs[i][0].onionNext[1].transform.localEulerAngles = MotionScene.objs[i][frame + 2].rot;
+    //                MotionScene.objs[i][0].onionNext[1].transform.localScale = MotionScene.objs[i][frame + 2].scale;
+    //            }
+    //            else
+    //            {
+    //                MotionScene.objs[i][0].onionNext[1].transform.localPosition = Vector3.down * 1000000000;
+    //            }
+    //        }
+    //    }
+    //}
 
     void ResetButtons(int i)
     {
@@ -530,47 +546,46 @@ public class ctrl : MonoBehaviour
 
     void UpdateAllObjs()
     {
-        for (int i = 0; i < MotionScene.objs.Count; i++)
+        for (int i = 0; i < MotionScene.motionObj.Count; i++)
         {
-            if (MotionScene.objs[i][0].parent == null)
-            {
-                MotionScene.objs[i][0].obj.transform.localPosition = MotionScene.objs[i][frame].pos;
-                MotionScene.objs[i][0].obj.transform.localEulerAngles = MotionScene.objs[i][frame].rot;
-                MotionScene.objs[i][0].obj.transform.localScale = MotionScene.objs[i][frame].scale;
-            }
+            MotionScene.motionObj[i].SetObj(frame);
         }
     }
 
     GameObject CreatePrimitive()
     {
+        // Instantiate our new obj
         GameObject g = GameObject.CreatePrimitive(pTypes[pType]);
+        // Put it in front of you, kind of
         g.transform.localPosition = cam.transform.forward * .25f + (Vector3.up) + (Vector3.forward / 2);
+        // scale it down for some reason
         g.transform.localScale = Vector3.one * .5f;
+        // tag it
         g.tag = "Grab";
 
+        // change the color to be the appropriate color chosen
         Renderer r = g.GetComponent<Renderer>();
         r.material.color = cols[col];
 
+        // Remove the physics, unfortunately we still need rigidbody for collisions
         Rigidbody rb = g.AddComponent<Rigidbody>();
         rb.isKinematic = true;
 
+        // Make the object grabbable
         OVRGrabbable grab = g.AddComponent<OVRGrabbable>();
         grab.enabled = true;
+        // it needs a creation id (TEMP QUICK & LAZY SYSTEM I THINK)
         grab.id = creation;
+        // incriment the id
         creation++;
 
-        MotionObj[] mO = new MotionObj[10000];
+        // Make a new Motion Object
+        MotionObject mO = new MotionObject(g, 1000);
 
-        for (int i = 0; i < mO.Length; i++)
-        {
-            mO[i] = new MotionObj() { scale = Vector3.one * .5f };
-        }
+        // Add that Motion Object to the Motion Scene
+        MotionScene.motionObj.Add(mO);
 
-        // Set the object
-        mO[0].obj = g;
-
-        MotionScene.objs.Add(mO);
-
+        // 
         CreateOnionSkins(grab.id, g.GetComponent<MeshFilter>().mesh);
 
         return g;

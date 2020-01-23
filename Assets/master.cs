@@ -14,14 +14,14 @@ public class master : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    txt_Frame = GameObject.Find("txt_Frame").GetComponent<TextMeshPro>();
-    txt_Rate = GameObject.Find("txt_Rate").GetComponent<TextMeshPro>();
-    txt_Last = GameObject.Find("txt_Last").GetComponent<TextMeshPro>();
-    txt_Geo = GameObject.Find("txt_Geo").GetComponent<TextMeshPro>();
-    txt_Color = GameObject.Find("txt_Color").GetComponent<TextMeshPro>();
+        txt_Frame = GameObject.Find("txt_Frame").GetComponent<TextMeshPro>();
+        txt_Rate = GameObject.Find("txt_Rate").GetComponent<TextMeshPro>();
+        txt_Last = GameObject.Find("txt_Last").GetComponent<TextMeshPro>();
+        txt_Geo = GameObject.Find("txt_Geo").GetComponent<TextMeshPro>();
+        txt_Color = GameObject.Find("txt_Color").GetComponent<TextMeshPro>();
 
         txt_Scale = GameObject.Find("txt_Scale").GetComponent<TextMeshPro>();
-    txt_Debug = GameObject.Find("txt_Debug").GetComponent<TextMeshPro>();
+        txt_Debug = GameObject.Find("txt_Debug").GetComponent<TextMeshPro>();
     }
 
     // Update is called once per frame

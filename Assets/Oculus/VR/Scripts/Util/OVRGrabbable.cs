@@ -36,7 +36,7 @@ public class OVRGrabbable : MonoBehaviour
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
     protected OVRGrabber m_grabbedBy = null;
-    bool selected => ctrl.sel.transform.position == transform.position;
+    bool selected => ctrl.sel.transform.position == transform.position && ctrl.grObj.transform.position != transform.position;
     Renderer rend;
     Color col;
 

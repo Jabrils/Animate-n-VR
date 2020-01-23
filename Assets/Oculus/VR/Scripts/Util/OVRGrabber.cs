@@ -323,9 +323,7 @@ public class OVRGrabber : MonoBehaviour
         }
 
         // Here is where we continually update the frame data
-        MotionScene.objs[m_grabbedObj.id][ctrl.frame].pos = MotionScene.objs[m_grabbedObj.id][0].obj.transform.localPosition;
-        MotionScene.objs[m_grabbedObj.id][ctrl.frame].rot = MotionScene.objs[m_grabbedObj.id][0].obj.transform.localEulerAngles;
-        MotionScene.objs[m_grabbedObj.id][ctrl.frame].scale = MotionScene.objs[m_grabbedObj.id][0].obj.transform.localScale;
+        MotionScene.motionObj[m_grabbedObj.id].UpdateObj(ctrl.frame);
     }
 
     public void GrabEnd()
