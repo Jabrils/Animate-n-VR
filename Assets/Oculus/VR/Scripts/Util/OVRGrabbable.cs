@@ -36,6 +36,9 @@ public class OVRGrabbable : MonoBehaviour
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
     protected OVRGrabber m_grabbedBy = null;
+    bool selected => ctrl.sel.transform.position == transform.position;
+    Renderer rend;
+    Color col;
 
     public int id;
 
@@ -134,6 +137,25 @@ public class OVRGrabbable : MonoBehaviour
         m_grabbedCollider = null;
     }
 
+    void Update()
+    {
+        if (ctrl.mode == ctrl.Mode.Parenting)
+        {
+            if (selected)
+            {
+                rend.material.color = Color.red;
+            }
+            else
+            {
+                rend.material.color = col;
+            }
+        }
+        else
+        {
+            rend.material.color = col;
+        }
+    }
+
     void Awake()
     {
         //if (m_grabPoints.Length == 0)
@@ -153,6 +175,8 @@ public class OVRGrabbable : MonoBehaviour
     protected virtual void Start()
     {
         m_grabbedKinematic = GetComponent<Rigidbody>().isKinematic;
+        rend = GetComponent<Renderer>();
+        col = rend.material.color;
     }
 
     void OnDestroy()

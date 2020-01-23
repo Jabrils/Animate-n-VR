@@ -5,7 +5,7 @@ using UnityEngine;
 public class MotionObj
 {
     public GameObject obj, parent;
-    public GameObject[] b = new GameObject[2], a = new GameObject[2];
+    public GameObject[] onionPrev = new GameObject[2], onionNext = new GameObject[2];
     public Vector3 pos;
     public Vector3 rot;
     public Vector3 scale;
@@ -15,5 +15,6 @@ public class MotionObj
 
 public static class MotionScene
 {
+    // obj[obj #][frame] I THINK
     public static List<MotionObj[]> objs = new List<MotionObj[]>();
 }

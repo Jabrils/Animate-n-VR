@@ -3433,7 +3433,6 @@ MonoBehaviour:
   grabber:
   - {fileID: 430584715}
   - {fileID: 430584714}
-  mode: 0
 --- !u!4 &95518104
 Transform:
   m_ObjectHideFlags: 0
@@ -9297,7 +9296,7 @@ GameObject:
   - component: {fileID: 308122320}
   - component: {fileID: 308122319}
   m_Layer: 0
-  m_Name: txt_Scale (1)
+  m_Name: txt_Debug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

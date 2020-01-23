@@ -1154,10 +1154,10 @@ public class OVRManager : MonoBehaviour
 		// uncomment the following line to disable the callstack printed to log
 		//Application.SetStackTraceLogType(LogType.Log, StackTraceLogType.None);  // TEMPORARY
 
-		Debug.Log("Unity v" + Application.unityVersion + ", " +
-				"Oculus Utilities v" + OVRPlugin.wrapperVersion + ", " +
-				"OVRPlugin v" + OVRPlugin.version + ", " +
-				"SDK v" + OVRPlugin.nativeSDKVersion + ".");
+		//Debug.Log("Unity v" + Application.unityVersion + ", " +
+		//		"Oculus Utilities v" + OVRPlugin.wrapperVersion + ", " +
+		//		"OVRPlugin v" + OVRPlugin.version + ", " +
+		//		"SDK v" + OVRPlugin.nativeSDKVersion + ".");
 
 #if !UNITY_EDITOR
 		if (IsUnityAlphaOrBetaVersion())
@@ -1451,9 +1451,9 @@ public class OVRManager : MonoBehaviour
 
 		if (useRecommendedMSAALevel && QualitySettings.antiAliasing != display.recommendedMSAALevel)
 		{
-			Debug.Log("The current MSAA level is " + QualitySettings.antiAliasing +
-			", but the recommended MSAA level is " + display.recommendedMSAALevel +
-			". Switching to the recommended level.");
+			//Debug.Log("The current MSAA level is " + QualitySettings.antiAliasing +
+			//", but the recommended MSAA level is " + display.recommendedMSAALevel +
+			//". Switching to the recommended level.");
 
 			QualitySettings.antiAliasing = display.recommendedMSAALevel;
 		}
@@ -1579,7 +1579,7 @@ public class OVRManager : MonoBehaviour
 		{
 			try
 			{
-				Debug.Log("[OVRManager] InputFocusLost event");
+				//Debug.Log("[OVRManager] InputFocusLost event");
 				if (InputFocusLost != null)
 					InputFocusLost();
 			}
@@ -1862,7 +1862,7 @@ public class OVRManager : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("[OVRManager] OnApplicationPause(false)");
+			//Debug.Log("[OVRManager] OnApplicationPause(false)");
 		}
 	}
 
@@ -1870,11 +1870,11 @@ public class OVRManager : MonoBehaviour
 	{
 		if (focus)
 		{
-			Debug.Log("[OVRManager] OnApplicationFocus(true)");
+			//Debug.Log("[OVRManager] OnApplicationFocus(true)");
 		}
 		else
 		{
-			Debug.Log("[OVRManager] OnApplicationFocus(false)");
+			//Debug.Log("[OVRManager] OnApplicationFocus(false)");
 		}
 	}
 

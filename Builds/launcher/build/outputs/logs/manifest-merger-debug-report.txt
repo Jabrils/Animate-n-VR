@@ -10,7 +10,7 @@ INJECTED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:1
 INJECTED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:1-6:12
 INJECTED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:1-6:12
 	package
-		ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:70-98
+		ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:70-101
 		INJECTED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml
 		INJECTED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml
 	android:versionName
@@ -18,7 +18,7 @@ INJECTED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:1
 		ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:1-6:12
 		INJECTED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml
 	xmlns:tools
-		ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:99-145
+		ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:102-148
 	android:versionCode
 		INJECTED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml
 		ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:1-6:12
@@ -26,7 +26,7 @@ INJECTED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:1
 	xmlns:android
 		ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:11-69
 	android:installLocation
-		ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:146-176
+		ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:3:149-179
 supports-screens
 ADDED from G:\Unity\Flash VR\Builds\launcher\src\main\AndroidManifest.xml:4:3-163
 	android:largeScreens

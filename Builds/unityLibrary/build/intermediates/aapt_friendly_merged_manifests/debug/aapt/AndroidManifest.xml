@@ -5,7 +5,7 @@
     package="com.unity3d.player"
     android:installLocation="auto"
     android:versionCode="1"
-    android:versionName="0.0.2" >
+    android:versionName="0.0.3" >
 
     <uses-sdk
         android:minSdkVersion="21"
@@ -54,7 +54,7 @@
             android:value="portrait|landscape" />
         <meta-data
             android:name="unity.build-id"
-            android:value="99a3f4af-d1c1-4450-aeb5-278de9071326" />
+            android:value="bb7dd440-94d1-4721-9784-52d324192d55" />
         <meta-data
             android:name="com.samsung.android.vr.application.mode"
             android:value="vr_only" />

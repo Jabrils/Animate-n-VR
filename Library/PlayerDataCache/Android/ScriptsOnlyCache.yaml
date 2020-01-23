@@ -717,7 +717,7 @@ ScriptsOnlyBuild:
     className: DetectBasket
   - hash:
       serializedVersion: 2
-      Hash: 671ff6e2fbb51de5be8dd776e37ceca2
+      Hash: fef2115b284ee200541ca038c7fea4b6
     assemblyName: Oculus.VR.dll
     namespaceName: 
     className: ctrl

@@ -5,7 +5,7 @@ using TMPro;
 
 public class master : MonoBehaviour
 {
-    TextMeshPro txt_Frame, txt_Rate, txt_Last, txt_Geo, txt_Color;
+    TextMeshPro txt_Frame, txt_Rate, txt_Last, txt_Geo, txt_Color, txt_Debug;
     TextMeshPro txt_Scale;
     public static string save;
     string[] cols = new string[] { "Black", "White", "Red", "Blue", "Green", "Gray", "Cyan", "Magenta" };
@@ -20,7 +20,8 @@ public class master : MonoBehaviour
     txt_Geo = GameObject.Find("txt_Geo").GetComponent<TextMeshPro>();
     txt_Color = GameObject.Find("txt_Color").GetComponent<TextMeshPro>();
 
-    txt_Scale = GameObject.Find("txt_Scale").GetComponent<TextMeshPro>();
+        txt_Scale = GameObject.Find("txt_Scale").GetComponent<TextMeshPro>();
+    txt_Debug = GameObject.Find("txt_Debug").GetComponent<TextMeshPro>();
     }
 
     // Update is called once per frame
@@ -33,6 +34,7 @@ public class master : MonoBehaviour
         txt_Color.text = $"Color: {cols[ctrl.col]}";
 
         txt_Scale.text = $"Scaling: {scal[ctrl.scaleAxis]}";
+        txt_Debug.text = $"Debug: {ctrl.debutInfo}";
 
         txt_Frame.color = ctrl.uiLoc == 0 ? Color.yellow : Color.white;
         txt_Rate.color = ctrl.uiLoc == 1 ? Color.yellow : Color.white;

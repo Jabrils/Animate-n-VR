@@ -18,12 +18,12 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        applicationId 'com.HAXLLC.FlashVR'
+        applicationId 'com.HAXLLC.AnimatenVR'
         ndk {
             abiFilters 'armeabi-v7a'
         }
         versionCode 1
-        versionName '0.0.2'
+        versionName '0.0.3'
     }
 
     aaptOptions {

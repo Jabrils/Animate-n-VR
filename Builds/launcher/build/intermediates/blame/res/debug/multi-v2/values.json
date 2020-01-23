@@ -6,54 +6,49 @@
                 {
                     "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\values\\strings.xml",
                     "from": {
-                        "startLines": "2,3",
-                        "startColumns": "2,2",
-                        "startOffsets": "55,100",
-                        "endColumns": "43,65",
-                        "endOffsets": "96,163"
+                        "startLines": "2,-1",
+                        "startColumns": "2,-1",
+                        "startOffsets": "55,-1",
+                        "endColumns": "51,-1",
+                        "endOffsets": "104,-1"
                     },
                     "to": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
-                        "startOffsets": "55,101",
-                        "endColumns": "45,67",
-                        "endOffsets": "96,164"
+                        "startOffsets": "55,109",
+                        "endColumns": "53,67",
+                        "endOffsets": "104,172"
                     }
                 },
                 {
                     "source": "C:\\Users\\brilj\\.gradle\\caches\\transforms-2\\files-2.1\\01a20ff69c994b2da9c7804c14c2591c\\res\\values\\values.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "2",
-                        "startOffsets": "53",
-                        "endColumns": "41",
-                        "endOffsets": "92"
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
                     },
                     "to": {
                         "startLines": "4",
                         "startColumns": "4",
-                        "startOffsets": "169",
+                        "startOffsets": "177",
                         "endColumns": "43",
-                        "endOffsets": "208"
+                        "endOffsets": "216"
                     }
                 },
                 {
                     "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\values\\styles.xml",
                     "from": {
-                        "startLines": "5,2,7",
-                        "startColumns": "0,0,0",
-                        "startOffsets": "190,53,288",
-                        "endLines": "6,4,10",
-                        "endColumns": "8,8,8",
-                        "endOffsets": "286,188,513"
+                        "startLines": "-1,-1,-1",
+                        "startColumns": "-1,-1,-1",
+                        "startOffsets": "-1,-1,-1"
                     },
                     "to": {
                         "startLines": "5,7,10",
                         "startColumns": "4,4,4",
-                        "startOffsets": "213,313,451",
+                        "startOffsets": "221,321,459",
                         "endLines": "6,9,13",
                         "endColumns": "8,8,8",
-                        "endOffsets": "308,446,673"
+                        "endOffsets": "316,454,681"
                     }
                 }
             ]
