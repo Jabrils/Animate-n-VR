@@ -14,7 +14,7 @@ public class ctrl : MonoBehaviour
     public static Color[] cols = new Color[] { Color.black, Color.white, Color.red, Color.blue, Color.green, Color.grey, Color.cyan, Color.magenta };
     public static GameObject sel, grObj;
 
-    public static int frame = 0, lastFrame = 10, pType, col;
+    public static int frame = 0, lastFrame = 10, pType, col, oSkinCount = 10;
     public static float fps = 12;
     public static int scaleAxis, uiLoc;
     public static bool[] parent = new bool[] { true, true };
@@ -26,6 +26,8 @@ public class ctrl : MonoBehaviour
     bool[] buttBottomReset = new bool[] { true, true };
     bool[] joyInReset = new bool[] { true, true };
     bool[] joyIndexReset = new bool[] { true, true };
+    MotionObject grObjMO => MotionScene.motionObj[grObj.GetComponent<OVRGrabbable>().id];
+    MotionObject grSelMO => MotionScene.motionObj[grSel.GetComponent<OVRGrabbable>().id];
 
     LineRenderer grLine;
     OVRGrabber grParent;
@@ -71,21 +73,11 @@ public class ctrl : MonoBehaviour
             b[i].transform.localPosition = Vector3.down * 1000000000;
             a[i].transform.localPosition = Vector3.down * 1000000000;
         }
-
-        //MotionScene.objs[id][0].onionNext = a;
-        //MotionScene.objs[id][0].onionPrev = b;
     }
 
     void Start()
     {
         sel = new GameObject("SEL");
-
-        //GameObject a = CreatePrimitive();
-        //GameObject b = CreatePrimitive();
-        //b.transform.position += Vector3.right;
-
-        //b.transform.SetParent(a.transform);
-
     }
 
     // Update is called once per frame
@@ -95,8 +87,6 @@ public class ctrl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            frame++;
-            //UpdateAllObjs();
         }
 
         // reset BG color to white
@@ -122,8 +112,8 @@ public class ctrl : MonoBehaviour
     {
         for (int i = 0; i < MotionScene.motionObj.Count; i++)
         {
-            MotionScene.motionObj[i].SetObj(frame - 1);
-            MotionScene.motionObj[i].UpdateObj(frame);
+            MotionScene.motionObj[i].MoveObj(frame - 1);
+            MotionScene.motionObj[i].UpdateObjData(frame);
         }
     }
 
@@ -141,6 +131,7 @@ public class ctrl : MonoBehaviour
         {
             if (hit.transform.tag == "Grab")
             {
+                // 
                 grSel = hit.collider.gameObject;
                 sel.transform.position = grSel.transform.position;
 
@@ -149,6 +140,13 @@ public class ctrl : MonoBehaviour
                 {
                     // set the parent
                     grObj.transform.SetParent(grSel.transform.position == grObj.transform.position ? null : grSel.transform);
+
+                    // 
+                    for (int i = 0; i < oSkinCount; i++)
+                    {
+                        grObjMO.oSkinP[i].transform.SetParent(grSelMO.oSkinP[i].transform);
+                        grObjMO.oSkinN[i].transform.SetParent(grSelMO.oSkinN[i].transform);
+                    }
 
                     EndParenting();
                 }
@@ -175,7 +173,7 @@ public class ctrl : MonoBehaviour
         // get a reference to the OVR Grabbable for the id
         OVRGrabbable ovrg = grObj.GetComponent<OVRGrabbable>();
         // Update that object's data
-        MotionScene.motionObj[ovrg.id].UpdateObj(frame);
+        MotionScene.motionObj[ovrg.id].UpdateObjData(frame);
 
         // Reset everything
         sel.transform.position = Vector3.up * 10000;
@@ -232,28 +230,24 @@ public class ctrl : MonoBehaviour
             playFrame = 0;
         }
 
+        // 
         for (int i = 0; i < 2; i++)
         {
+            // 
             if (buttBottomReset[i] && TouchControls.Bottom[i])
             {
                 mode = Mode.Animate;
                 buttBottomReset[i] = false;
             }
 
+            // 
             if (!TouchControls.Bottom[i])
             {
                 buttBottomReset[i] = true;
             }
-
-            //// Remove all onion skins while in play mode
-            //for (int j = 0; j < MotionScene.objs.Count; j++)
-            //{
-            //    MotionScene.objs[j][0].onionPrev[i].transform.localPosition = Vector3.down * 1000000000;
-            //    MotionScene.objs[j][0].onionNext[i].transform.localPosition = Vector3.down * 1000000000;
-            //}
         }
 
-        //UpdateAllObjs();
+        UpdateAllObjs(true);
     }
 
     void ModeAnimate()
@@ -280,9 +274,6 @@ public class ctrl : MonoBehaviour
 
             ResetButtons(i);
         }
-
-        // 
-        //UpdateOnionSkins();
     }
 
     void GrabbedObjControls(int i)
@@ -290,7 +281,12 @@ public class ctrl : MonoBehaviour
         // Scale
         Transform meScale = grabber[i].grabbedObject.transform;
         meScale.localScale += (scaleAxises[scaleAxis] * TouchControls.Joystick[i].y * .01f);
-        //meScale.localScale = new Vector3(Mathf.Clamp(meScale.localScale.x, scaleMaxClamp.x, scaleMaxClamp.y), Mathf.Clamp(meScale.localScale.y, scaleMaxClamp.x, scaleMaxClamp.y), Mathf.Clamp(meScale.localScale.y, scaleMaxClamp.x, scaleMaxClamp.y));
+
+        // if too small, delete
+        if (meScale.localScale.x < .05f && meScale.localScale.y < .05f && meScale.localScale.z < .05f)
+        {
+            //MotionScene.motionObj[grabber[i].grabbedObject.id].Delete();
+        }
 
         // 
         if (joyIndexReset[i] && TouchControls.Index[i])
@@ -316,66 +312,16 @@ public class ctrl : MonoBehaviour
         // 
         if (joyInReset[i] && TouchControls.In[i])
         {
-            grabber[i].Delete();
+            CreatePrimitive(true, i);
+            joyInReset[i] = false;
+        }
+
+        // 
+        if (!TouchControls.In[i])
+        {
+            joyInReset[i] = true;
         }
     }
-
-    //void UpdateOnionSkins()
-    //{
-    //    for (int i = 0; i < MotionScene.objs.Count; i++)
-    //    {
-    //        if (MotionScene.objs[i][0].parent == null)
-    //        {
-    //            // Past 0
-    //            if (frame > 0)
-    //            {
-    //                MotionScene.objs[i][0].onionPrev[0].transform.localPosition = MotionScene.objs[i][frame - 1].pos;
-    //                MotionScene.objs[i][0].onionPrev[0].transform.localEulerAngles = MotionScene.objs[i][frame - 1].rot;
-    //                MotionScene.objs[i][0].onionPrev[0].transform.localScale = MotionScene.objs[i][frame - 1].scale;
-    //            }
-    //            else
-    //            {
-    //                MotionScene.objs[i][0].onionPrev[0].transform.localPosition = Vector3.down * 1000000000;
-    //            }
-
-    //            // Past 1
-    //            if (frame > 1)
-    //            {
-    //                MotionScene.objs[i][0].onionPrev[1].transform.localPosition = MotionScene.objs[i][frame - 2].pos;
-    //                MotionScene.objs[i][0].onionPrev[1].transform.localEulerAngles = MotionScene.objs[i][frame - 2].rot;
-    //                MotionScene.objs[i][0].onionPrev[1].transform.localScale = MotionScene.objs[i][frame - 2].scale;
-    //            }
-    //            else
-    //            {
-    //                MotionScene.objs[i][0].onionPrev[1].transform.localPosition = Vector3.down * 1000000000;
-    //            }
-
-    //            // Future 0
-    //            if (frame < lastFrame - 1)
-    //            {
-    //                MotionScene.objs[i][0].onionNext[0].transform.localPosition = MotionScene.objs[i][frame + 1].pos;
-    //                MotionScene.objs[i][0].onionNext[0].transform.localEulerAngles = MotionScene.objs[i][frame + 1].rot;
-    //                MotionScene.objs[i][0].onionNext[0].transform.localScale = MotionScene.objs[i][frame + 1].scale;
-    //            }
-    //            else
-    //            {
-    //                MotionScene.objs[i][0].onionNext[0].transform.localPosition = Vector3.down * 1000000000;
-    //            }
-
-    //            // Future 1
-    //            if (frame < lastFrame - 2)
-    //            {
-    //                MotionScene.objs[i][0].onionNext[1].transform.localPosition = MotionScene.objs[i][frame + 2].pos;
-    //                MotionScene.objs[i][0].onionNext[1].transform.localEulerAngles = MotionScene.objs[i][frame + 2].rot;
-    //                MotionScene.objs[i][0].onionNext[1].transform.localScale = MotionScene.objs[i][frame + 2].scale;
-    //            }
-    //            else
-    //            {
-    //                MotionScene.objs[i][0].onionNext[1].transform.localPosition = Vector3.down * 1000000000;
-    //            }
-    //        }
-    //    }
-    //}
 
     void ResetButtons(int i)
     {
@@ -402,34 +348,6 @@ public class ctrl : MonoBehaviour
         {
             parent[i] = true;
         }
-    }
-
-    public static GameObject GetClosestTo(OVRGrabbable gr)
-    {
-        GameObject[] grabs = GameObject.FindGameObjectsWithTag("Grab");
-
-        float dist = Mathf.Infinity;
-        int id = -1;
-
-        // 
-        for (int j = 0; j < grabs.Length; j++)
-        {
-            float d = Vector3.Distance(grabs[j].transform.localPosition, gr.transform.localPosition);
-
-            if (d == 0)
-            {
-                continue;
-            }
-
-            // 
-            if (d < dist)
-            {
-                dist = d;
-                id = j;
-            }
-        }
-
-        return grabs[id];
     }
 
     IEnumerator ColorObjs(Renderer a, Renderer b)
@@ -492,7 +410,7 @@ public class ctrl : MonoBehaviour
                 {
                     frame += (int)Mathf.Sign(jrX);
                     frame = Mathf.Clamp(frame, 0, lastFrame - 1);
-                    UpdateAllObjs();
+                    UpdateAllObjs(false);
                 }
                 else if (uiLoc == 1)
                 {
@@ -529,7 +447,7 @@ public class ctrl : MonoBehaviour
             {
                 frame += (int)Mathf.Sign(jrX);
                 frame = Mathf.Clamp(frame, 0, lastFrame - 1);
-                UpdateAllObjs();
+                UpdateAllObjs(false);
             }
             else if (uiLoc == 1)
             {
@@ -544,36 +462,50 @@ public class ctrl : MonoBehaviour
         }
     }
 
-    void UpdateAllObjs()
+    void UpdateAllObjs(bool onion)
     {
         for (int i = 0; i < MotionScene.motionObj.Count; i++)
         {
-            MotionScene.motionObj[i].SetObj(frame);
+            MotionScene.motionObj[i].MoveObj(frame, updateOS: true, noOnion: onion);
         }
     }
 
-    GameObject CreatePrimitive()
+    GameObject CreatePrimitive(bool copy = false, int hand = -1)
     {
-        // Instantiate our new obj
-        GameObject g = GameObject.CreatePrimitive(pTypes[pType]);
-        // Put it in front of you, kind of
-        g.transform.localPosition = cam.transform.forward * .25f + (Vector3.up) + (Vector3.forward / 2);
-        // scale it down for some reason
-        g.transform.localScale = Vector3.one * .5f;
-        // tag it
-        g.tag = "Grab";
+        GameObject g = null;
+        OVRGrabbable grab = null;
 
-        // change the color to be the appropriate color chosen
-        Renderer r = g.GetComponent<Renderer>();
-        r.material.color = cols[col];
+        // 
+        if (!copy)
+        {
+            // Instantiate our new obj
+            g = GameObject.CreatePrimitive(pTypes[pType]);
+            // Put it in front of you, kind of
+            g.transform.localPosition = cam.transform.forward * .25f + (Vector3.up) + (Vector3.forward / 2);
+            // scale it down for some reason
+            g.transform.localScale = Vector3.one * .5f;
 
-        // Remove the physics, unfortunately we still need rigidbody for collisions
-        Rigidbody rb = g.AddComponent<Rigidbody>();
-        rb.isKinematic = true;
+            // tag it
+            g.tag = "Grab";
 
-        // Make the object grabbable
-        OVRGrabbable grab = g.AddComponent<OVRGrabbable>();
-        grab.enabled = true;
+            // change the color to be the appropriate color chosen
+            Renderer r = g.GetComponent<Renderer>();
+            r.material.color = cols[col];
+
+            // Remove the physics, unfortunately we still need rigidbody for collisions
+            Rigidbody rb = g.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
+
+            // Make the object grabbable
+            grab = g.AddComponent<OVRGrabbable>();
+            grab.enabled = true;
+        }
+        else
+        {
+            g = Instantiate(grabber[hand].grabbedObject.gameObject);
+            grab = g.GetComponent<OVRGrabbable>();
+        }
+
         // it needs a creation id (TEMP QUICK & LAZY SYSTEM I THINK)
         grab.id = creation;
         // incriment the id

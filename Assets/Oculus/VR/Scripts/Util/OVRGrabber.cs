@@ -294,11 +294,7 @@ public class OVRGrabber : MonoBehaviour
         }
     }
 
-    public void Delete()
-    {
-        Destroy(grabbedObject.gameObject);
-    }
-
+    // 
     protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot, bool forceTeleport = false)
     {
         if (m_grabbedObj == null)
@@ -323,7 +319,7 @@ public class OVRGrabber : MonoBehaviour
         }
 
         // Here is where we continually update the frame data
-        MotionScene.motionObj[m_grabbedObj.id].UpdateObj(ctrl.frame);
+        MotionScene.motionObj[m_grabbedObj.id].UpdateObjData(ctrl.frame);
     }
 
     public void GrabEnd()

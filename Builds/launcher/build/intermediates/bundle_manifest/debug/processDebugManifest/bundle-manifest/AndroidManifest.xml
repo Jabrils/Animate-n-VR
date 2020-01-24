@@ -4,7 +4,7 @@
     package="com.HAXLLC.AnimatenVR"
     android:installLocation="auto"
     android:versionCode="1"
-    android:versionName="0.0.3" >
+    android:versionName="0.0.5" >
 
     <uses-sdk
         android:minSdkVersion="21"
@@ -65,7 +65,7 @@
             android:value="portrait|landscape" />
         <meta-data
             android:name="unity.build-id"
-            android:value="44f50097-ec21-4b04-848d-f96c2f375e9a" />
+            android:value="ffc2f1ad-ae35-4245-8660-6b81ea40cd74" />
         <meta-data
             android:name="com.samsung.android.vr.application.mode"
             android:value="vr_only" />

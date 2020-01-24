@@ -5,6 +5,7 @@ using TMPro;
 
 public class master : MonoBehaviour
 {
+    GameObject UI, Info;
     TextMeshPro txt_Frame, txt_Rate, txt_Last, txt_Geo, txt_Color, txt_Debug;
     TextMeshPro txt_Scale;
     public static string save;
@@ -14,6 +15,9 @@ public class master : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UI = GameObject.Find("UI");
+        Info = GameObject.Find("Info");
+
         txt_Frame = GameObject.Find("txt_Frame").GetComponent<TextMeshPro>();
         txt_Rate = GameObject.Find("txt_Rate").GetComponent<TextMeshPro>();
         txt_Last = GameObject.Find("txt_Last").GetComponent<TextMeshPro>();
@@ -27,6 +31,15 @@ public class master : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UI.gameObject.SetActive(ctrl.mode != ctrl.Mode.Play);
+        Info.gameObject.SetActive(ctrl.mode != ctrl.Mode.Play);
+
+        // 
+        if (ctrl.mode == ctrl.Mode.Play)
+        {
+            return;
+        }
+
         txt_Frame.text = $"Frame: {ctrl.frame + 1}";
         txt_Rate.text = $"FPS: {ctrl.fps}";
         txt_Last.text = $"Last Frame: {ctrl.lastFrame}";
