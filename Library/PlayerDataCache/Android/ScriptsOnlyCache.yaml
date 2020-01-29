@@ -64,13 +64,13 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11540}
+      Script: {instanceID: 11542}
     - Class: 114
-      Script: {instanceID: 11680}
+      Script: {instanceID: 11682}
     - Class: 114
-      Script: {instanceID: 12424}
+      Script: {instanceID: 12426}
     - Class: 114
-      Script: {instanceID: 12486}
+      Script: {instanceID: 12488}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -115,35 +115,35 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11540}
+      Script: {instanceID: 11542}
     - Class: 114
-      Script: {instanceID: 11680}
+      Script: {instanceID: 11682}
     - Class: 114
-      Script: {instanceID: 11772}
+      Script: {instanceID: 11774}
     - Class: 114
-      Script: {instanceID: 12346}
+      Script: {instanceID: 12348}
     - Class: 114
-      Script: {instanceID: 12424}
+      Script: {instanceID: 12426}
     - Class: 114
-      Script: {instanceID: 12486}
+      Script: {instanceID: 12488}
     - Class: 114
-      Script: {instanceID: 12834}
+      Script: {instanceID: 12836}
     - Class: 114
-      Script: {instanceID: 12980}
+      Script: {instanceID: 12982}
     - Class: 114
-      Script: {instanceID: 13126}
+      Script: {instanceID: 13128}
     - Class: 114
-      Script: {instanceID: 13198}
+      Script: {instanceID: 13200}
     - Class: 114
-      Script: {instanceID: 13216}
+      Script: {instanceID: 13218}
     - Class: 114
-      Script: {instanceID: 13366}
+      Script: {instanceID: 13368}
     - Class: 114
-      Script: {instanceID: 13602}
+      Script: {instanceID: 13604}
     - Class: 114
-      Script: {instanceID: 13774}
+      Script: {instanceID: 13776}
     - Class: 114
-      Script: {instanceID: 13908}
+      Script: {instanceID: 13910}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -609,7 +609,7 @@ ScriptsOnlyBuild:
     className: TeleportTransitionWarp
   - hash:
       serializedVersion: 2
-      Hash: cb390f72d3bbd992cfa547449a4873e7
+      Hash: fcdf74ad835d27d42571751b764ee403
     assemblyName: Assembly-CSharp.dll
     namespaceName: OculusSampleFramework
     className: DistanceGrabber
@@ -1209,7 +1209,7 @@ ScriptsOnlyBuild:
     className: DebugUIBuilder
   - hash:
       serializedVersion: 2
-      Hash: 11206112ec687db2172d3c94b2bdc0f2
+      Hash: 1359b16f2823318d09b855bd9aa03b2f
     assemblyName: Oculus.VR.dll
     namespaceName: 
     className: OVRGrabber

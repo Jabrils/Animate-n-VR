@@ -155,11 +155,11 @@
     <None Include="Assets\Oculus\VR\Resources\Unlit Transparent Color.shader" />
     <None Include="Assets\Oculus\VR\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Oculus\VR\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>G:/Unity/Flash VR/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>G:/Unity/Flash VR/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>G:/Unity/Flash VR/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.0f3/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

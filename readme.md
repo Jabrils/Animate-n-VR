@@ -1,8 +1,13 @@
 ## Animate 'n' VR - v0.0.5
 
+- Hold grab to show enable / disable
+
 ### Road Map
 |v|date|task
 |-|-|-
+|||Able to choose any color
+|||Added a different layers feature
+|||Added the ability to enable / disable objects
 |||Added a flip feature
 |||Added a tutorial / how to screen
 |||Objects can be deleted

@@ -1,22 +1,66 @@
 [
     {
-        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_app_icon_round.xml.flat",
-        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-anydpi-v26\\app_icon_round.xml"
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_app_icon_round.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-xxxhdpi\\app_icon_round.png"
     },
     {
-        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_app_icon.png.flat",
-        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-mdpi\\app_icon.png"
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-ldpi_app_icon.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-ldpi\\app_icon.png"
     },
     {
         "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_foreground.png.flat",
         "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-mdpi\\ic_launcher_foreground.png"
     },
     {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_app_icon_round.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-hdpi\\app_icon_round.png"
+    },
+    {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_app_icon_round.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-xxhdpi\\app_icon_round.png"
+    },
+    {
         "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_background.png.flat",
         "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-mdpi\\ic_launcher_background.png"
     },
     {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_app_icon.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-hdpi\\app_icon.png"
+    },
+    {
         "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_app_icon.xml.flat",
         "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-anydpi-v26\\app_icon.xml"
+    },
+    {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-ldpi_app_icon_round.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-ldpi\\app_icon_round.png"
+    },
+    {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_app_icon_round.xml.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-anydpi-v26\\app_icon_round.xml"
+    },
+    {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_app_icon_round.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-xhdpi\\app_icon_round.png"
+    },
+    {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_app_icon.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-mdpi\\app_icon.png"
+    },
+    {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_app_icon.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-xxhdpi\\app_icon.png"
+    },
+    {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_app_icon.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-xxxhdpi\\app_icon.png"
+    },
+    {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_app_icon_round.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-mdpi\\app_icon_round.png"
+    },
+    {
+        "merged": "G:\\Unity\\Flash VR\\Builds\\launcher\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_app_icon.png.flat",
+        "source": "G:\\Unity\\Flash VR\\Builds\\launcher\\src\\main\\res\\mipmap-xhdpi\\app_icon.png"
     }
 ]

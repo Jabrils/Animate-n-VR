@@ -7,6 +7,9 @@ public class MotionObject
     public GameObject self => _self;
     public GameObject[] oSkinP => _oSkinP;
     public GameObject[] oSkinN => _oSkinN;
+    public int layer => _layer;
+    public bool enabled = true;
+    int _layer;
     GameObject _self;
     GameObject[] _oSkinP, _oSkinN;
     DataObject[] _data;
@@ -19,6 +22,7 @@ public class MotionObject
 
         _oSkinP = new GameObject[ctrl.oSkinCount];
         _oSkinN = new GameObject[ctrl.oSkinCount];
+        _layer = ctrl.theLayer;
 
         // This is all very lazy, admittedly
         for (int i = 0; i < ctrl.oSkinCount; i++)
@@ -58,6 +62,7 @@ public class MotionObject
     {
         Take(ref _self, _data[frame]);
 
+        // 
         if (noOnion)
         {
             for (int i = 0; i < ctrl.oSkinCount; i++)
@@ -101,6 +106,12 @@ public class MotionObject
 
     void Take(ref GameObject t, DataObject dO)
     {
+        if (!enabled)
+        {
+            t.transform.localScale = Vector3.zero;
+            return;
+        }
+
         t.transform.localPosition = dO.pos;
         t.transform.localEulerAngles = dO.rot;
         t.transform.localScale = dO.scale;
@@ -117,7 +128,7 @@ public class MotionObject
             GameObject.Destroy(oSkinN[i]);
         }
 
-        MotionScene.motionObj.Remove(this);
+        MotionScene.layer[ctrl.theLayer].motionObj.Remove(this);
     }
 }
 
@@ -135,14 +146,20 @@ public struct DataObject
     }
 }
 
+public class Layer
+{
+    public List<MotionObject> motionObj = new List<MotionObject>();
+}
+
 public static class MotionScene
 {
     // JSON
-    public static List<MotionObject> motionObj = new List<MotionObject>();
+
+    public static List<Layer> layer = new List<Layer>();
 
     public static void Save()
     {
-        for (int i = 0; i < motionObj.Count; i++)
+        for (int i = 0; i < layer.Count; i++)
         {
         }
     }
