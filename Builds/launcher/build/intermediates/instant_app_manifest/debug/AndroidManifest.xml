@@ -5,7 +5,7 @@
     android:installLocation="auto"
     android:targetSandboxVersion="2"
     android:versionCode="1"
-    android:versionName="0.0.5" >
+    android:versionName="0.0.6" >
 
     <uses-sdk
         android:minSdkVersion="21"
@@ -66,7 +66,7 @@
             android:value="portrait|landscape" />
         <meta-data
             android:name="unity.build-id"
-            android:value="18d633c4-e69a-4ad6-8901-cb51d8efe822" />
+            android:value="cd57a121-3022-43ea-b047-a3023936efb1" />
         <meta-data
             android:name="com.samsung.android.vr.application.mode"
             android:value="vr_only" />

@@ -7,9 +7,8 @@ public class MotionObject
     public GameObject self => _self;
     public GameObject[] oSkinP => _oSkinP;
     public GameObject[] oSkinN => _oSkinN;
-    public int layer => _layer;
-    public bool enabled = true;
-    int _layer;
+    public bool hide => _hide;
+    bool _hide;
     GameObject _self;
     GameObject[] _oSkinP, _oSkinN;
     DataObject[] _data;
@@ -22,14 +21,17 @@ public class MotionObject
 
         _oSkinP = new GameObject[ctrl.oSkinCount];
         _oSkinN = new GameObject[ctrl.oSkinCount];
-        _layer = ctrl.theLayer;
 
-        // This is all very lazy, admittedly
         for (int i = 0; i < ctrl.oSkinCount; i++)
         {
             CreateOnion(new Color(1, 0, 0, .25f / (i + 1)), ref _oSkinP[i]);
             CreateOnion(new Color(0, 1, 0, .25f / (i + 1)), ref _oSkinN[i]);
         }
+    }
+
+    public void ToggleHide(bool w)
+    {
+        _hide = w;
     }
 
     void CreateOnion(Color mainCol, ref GameObject gO)
@@ -60,17 +62,21 @@ public class MotionObject
     /// <param name="frame"></param>
     public void MoveObj(int frame, bool updateOS = false, bool noOnion = false)
     {
+        // if we are hiding then we will shirk & return
+        if (hide && ctrl.mode == ctrl.Mode.Play)
+        {
+            self.transform.localScale = Vector3.zero;
+            HideOnions();
+            return;
+        }
+
+        // else well take from whatever frame
         Take(ref _self, _data[frame]);
 
-        // 
+        // then check if we have no onions
         if (noOnion)
         {
-            for (int i = 0; i < ctrl.oSkinCount; i++)
-            {
-                _oSkinP[i].transform.localScale = Vector3.zero;
-                _oSkinN[i].transform.localScale = Vector3.zero;
-            }
-
+            HideOnions();
             return;
         }
 
@@ -104,14 +110,17 @@ public class MotionObject
         }
     }
 
+    private void HideOnions()
+    {
+        for (int i = 0; i < ctrl.oSkinCount; i++)
+        {
+            _oSkinP[i].transform.localScale = Vector3.zero;
+            _oSkinN[i].transform.localScale = Vector3.zero;
+        }
+    }
+
     void Take(ref GameObject t, DataObject dO)
     {
-        if (!enabled)
-        {
-            t.transform.localScale = Vector3.zero;
-            return;
-        }
-
         t.transform.localPosition = dO.pos;
         t.transform.localEulerAngles = dO.rot;
         t.transform.localScale = dO.scale;
@@ -128,7 +137,7 @@ public class MotionObject
             GameObject.Destroy(oSkinN[i]);
         }
 
-        MotionScene.layer[ctrl.theLayer].motionObj.Remove(this);
+        MotionScene.motionObj.Remove(this);
     }
 }
 
@@ -146,20 +155,14 @@ public struct DataObject
     }
 }
 
-public class Layer
-{
-    public List<MotionObject> motionObj = new List<MotionObject>();
-}
-
 public static class MotionScene
 {
     // JSON
-
-    public static List<Layer> layer = new List<Layer>();
+    public static List<MotionObject> motionObj = new List<MotionObject>();
 
     public static void Save()
     {
-        for (int i = 0; i < layer.Count; i++)
+        for (int i = 0; i < motionObj.Count; i++)
         {
         }
     }

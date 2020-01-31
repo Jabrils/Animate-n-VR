@@ -609,7 +609,7 @@ ScriptsOnlyBuild:
     className: TeleportTransitionWarp
   - hash:
       serializedVersion: 2
-      Hash: fcdf74ad835d27d42571751b764ee403
+      Hash: cb390f72d3bbd992cfa547449a4873e7
     assemblyName: Assembly-CSharp.dll
     namespaceName: OculusSampleFramework
     className: DistanceGrabber
@@ -1209,7 +1209,7 @@ ScriptsOnlyBuild:
     className: DebugUIBuilder
   - hash:
       serializedVersion: 2
-      Hash: 1359b16f2823318d09b855bd9aa03b2f
+      Hash: 11206112ec687db2172d3c94b2bdc0f2
     assemblyName: Oculus.VR.dll
     namespaceName: 
     className: OVRGrabber

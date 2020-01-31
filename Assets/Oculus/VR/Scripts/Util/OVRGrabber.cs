@@ -60,7 +60,6 @@ public class OVRGrabber : MonoBehaviour
     protected Quaternion m_grabbedObjectRotOff;
     protected Dictionary<OVRGrabbable, int> m_grabCandidates = new Dictionary<OVRGrabbable, int>();
     protected bool operatingWithoutOVRCameraRig = true;
-    public OVRGrabbable grabbedObject2;
 
     /// <summary>
     /// The currently grabbed object.
@@ -216,7 +215,6 @@ public class OVRGrabber : MonoBehaviour
         foreach (OVRGrabbable grabbable in m_grabCandidates.Keys)
         {
             bool canGrab = !(grabbable.isGrabbed && !grabbable.allowOffhandGrab);
-
             if (!canGrab)
             {
                 continue;
@@ -289,7 +287,6 @@ public class OVRGrabber : MonoBehaviour
             // speed and sends them flying. The grabbed object may still teleport inside of other objects, but fixing that
             // is beyond the scope of this demo.
             MoveGrabbedObject(m_lastPos, m_lastRot, true);
-
             if (m_parentHeldObject)
             {
                 m_grabbedObj.transform.parent = transform;
@@ -322,7 +319,7 @@ public class OVRGrabber : MonoBehaviour
         }
 
         // Here is where we continually update the frame data
-        MotionScene.layer[ctrl.theLayer].motionObj[m_grabbedObj.id].UpdateObjData(ctrl.frame);
+        MotionScene.motionObj[m_grabbedObj.id].UpdateObjData(ctrl.frame);
     }
 
     public void GrabEnd()

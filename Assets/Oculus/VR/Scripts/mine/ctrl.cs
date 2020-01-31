@@ -11,31 +11,29 @@ public class ctrl : MonoBehaviour
     public enum Mode { Animate, Play, Parenting }
     public static Mode mode;
     public static PrimitiveType[] pTypes = new PrimitiveType[] { PrimitiveType.Capsule, PrimitiveType.Cube, PrimitiveType.Cylinder, PrimitiveType.Plane, PrimitiveType.Quad, PrimitiveType.Sphere };
-    public static Color[] cols = new Color[] { Color.black, Color.white, Color.red, Color.blue, Color.green, Color.grey, Color.cyan, Color.magenta };
+    public static Color[] cols = new Color[] { Color.black, Color.white, Color.red, Color.blue, Color.green, Color.grey, Color.cyan, Color.magenta, Color.yellow, (Color.yellow + Color.red) / 2, new Color(.5f, 0, .5f) };
     public static GameObject sel, grObj;
 
-    public static int frame = 0, lastFrame = 10, pType, col, oSkinCount = 10, theLayer, maxLayers = 100;
+    public static int frame = 0, lastFrame = 10, pType, col, oSkinCount = 2;
     public static float fps = 12;
     public static int scaleAxis, uiLoc;
     public static bool[] parent = new bool[] { true, true };
     public static string debutInfo;
 
     float playFrame, lean = .5f;
-    int creation = 0;
+    int creation = 0, grParent;
     bool[] joyAxisReset = new bool[] { true, true };
     bool[] buttBottomReset = new bool[] { true, true };
     bool[] joyInReset = new bool[] { true, true };
     bool[] joyIndexReset = new bool[] { true, true };
-    MotionObject grObjMO => MotionScene.layer[theLayer].motionObj[grObj.GetComponent<OVRGrabbable>().id];
-    MotionObject grSelMO => MotionScene.layer[theLayer].motionObj[grSel.GetComponent<OVRGrabbable>().id];
+    MotionObject grObjMO => MotionScene.motionObj[grObj.GetComponent<OVRGrabbable>().id];
+    MotionObject grSelMO => MotionScene.motionObj[grSel.GetComponent<OVRGrabbable>().id];
 
-    LineRenderer[] lineHide = new LineRenderer[2];
-    LineRenderer grLine;
-    OVRGrabber grParent;
-    GameObject grSel;
-    Color grLast;
     float lineWidth = .005f;
     Color lineCol = Color.red;
+    LineRenderer[] lineRend = new LineRenderer[2];
+    GameObject grSel;
+    Color grLast;
 
     Vector3[] scaleAxises = new Vector3[] { Vector3.one, Vector3.right, Vector3.up, Vector3.forward };
     Vector2[] axisHold = new Vector2[2];
@@ -48,27 +46,30 @@ public class ctrl : MonoBehaviour
         sel = new GameObject("SEL");
 
         // 
-        for (int i = 0; i < maxLayers; i++)
+        for (int i = 0; i < 2; i++)
         {
-            MotionScene.layer.Add(new Layer());
+            lineRend[i] = AddGrabberLine(grabber[i], lineWidth, lineCol);
         }
-
-        GameObject a = CreatePrimitive();
-        GameObject b = CreatePrimitive();
-
-        parent[0] = false;
-        grabber[0].grabbedObject2 = a.GetComponent<OVRGrabbable>();
-        StartParenting(grabber[0]);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        debutInfo = MotionScene.layer[theLayer].motionObj.Count.ToString();
+        debutInfo = MotionScene.motionObj.Count.ToString();
 
-        // 
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            col--;
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            col++;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            CreatePrimitive();
         }
 
         // reset BG color to white
@@ -92,23 +93,23 @@ public class ctrl : MonoBehaviour
 
     void CopyFrameData()
     {
-        for (int i = 0; i < MotionScene.layer[theLayer].motionObj.Count; i++)
+        for (int i = 0; i < MotionScene.motionObj.Count; i++)
         {
-            MotionScene.layer[theLayer].motionObj[i].MoveObj(frame - 1);
-            MotionScene.layer[theLayer].motionObj[i].UpdateObjData(frame);
+            MotionScene.motionObj[i].MoveObj(frame - 1);
+            MotionScene.motionObj[i].UpdateObjData(frame);
         }
     }
 
     void ModeParenting()
     {
-        // 
-        Vector3[] a = new Vector3[] { grParent.transform.position, grParent.transform.position + grParent.transform.forward + grParent.transform.up };
+        //lineRend[0].enabled = false;
+        //lineRend[1].enabled = false;
 
-        // 
-        grLine.SetPositions(a);
+        Vector3[] a = new Vector3[] { grabber[grParent].transform.position, grabber[grParent].transform.position + grabber[grParent].transform.forward + grabber[grParent].transform.up };
 
-        // 
-        Ray r = new Ray(grLine.transform.position, grLine.transform.forward + grLine.transform.up);
+        lineRend[grParent].SetPositions(a);
+
+        Ray r = new Ray(lineRend[grParent].transform.position, lineRend[grParent].transform.forward + lineRend[grParent].transform.up);
         RaycastHit hit;
 
         // 
@@ -133,7 +134,6 @@ public class ctrl : MonoBehaviour
                         grObjMO.oSkinN[i].transform.SetParent(grSelMO.oSkinN[i].transform);
                     }
 
-                    // 
                     EndParenting();
                 }
             }
@@ -152,31 +152,15 @@ public class ctrl : MonoBehaviour
         }
     }
 
-    void StartParenting(OVRGrabber gr)
-    {
-        grObj = gr.grabbedObject2.gameObject;
-
-        gr.GrabEnd();
-
-        mode = Mode.Parenting;
-
-        DrawGrabberLine(gr, lineWidth, lineCol);
-
-        grParent = gr;
-    }
-
     void EndParenting()
     {
-        // We no longer need the line to show where we're pointing
-        Destroy(grLine);
         // get a reference to the OVR Grabbable for the id
         OVRGrabbable ovrg = grObj.GetComponent<OVRGrabbable>();
         // Update that object's data
-        MotionScene.layer[theLayer].motionObj[ovrg.id].UpdateObjData(frame);
+        MotionScene.motionObj[ovrg.id].UpdateObjData(frame);
 
         // Reset everything
         sel.transform.position = Vector3.up * 10000;
-        grParent = null;
         grObj = null;
         grSel = null;
 
@@ -184,22 +168,43 @@ public class ctrl : MonoBehaviour
         mode = Mode.Animate;
     }
 
-    LineRenderer DrawGrabberLine(OVRGrabber gr, float lineWidth, Color lineCol)
+    // 
+    void StartParenting(int i, OVRGrabber gr)
     {
-        grLine = gr.gameObject.AddComponent<LineRenderer>();
+        grObj = gr.grabbedObject.gameObject;
 
-        grLine.startWidth = lineWidth;
-        grLine.endWidth = lineWidth;
+        gr.GrabEnd();
 
-        grLine.startColor = lineCol;
-        grLine.endColor = lineCol;
+        mode = Mode.Parenting;
 
-        return grLine;
+        grParent = i;
     }
 
-    void DeleteGrabberLine(GameObject obj)
+    // 
+    LineRenderer AddGrabberLine(OVRGrabber gr, float lineWidth, Color lineCol)
     {
-        Destroy(obj.GetComponent<LineRenderer>());
+        LineRenderer change = gr.gameObject.AddComponent<LineRenderer>();
+
+        Material newMat = new Material(Shader.Find("Unlit/Texture"));
+        change.material = newMat;
+
+        change.startWidth = lineWidth;
+        change.endWidth = lineWidth;
+
+        change.startColor = lineCol;
+        change.endColor = lineCol;
+
+        return change;
+    }
+
+    LineRenderer ChangeGrabberLine(OVRGrabber gr, Color lineCol)
+    {
+        LineRenderer change = gr.gameObject.GetComponent<LineRenderer>();
+
+        change.startColor = lineCol;
+        change.endColor = lineCol;
+
+        return change;
     }
 
     void OnDrawGizmos()
@@ -215,10 +220,8 @@ public class ctrl : MonoBehaviour
 
     void ModePlay()
     {
-        // 
         playFrame += Time.deltaTime * fps;
 
-        // 
         frame = Mathf.Clamp(Mathf.RoundToInt(playFrame), 0, lastFrame);
 
         // 
@@ -244,7 +247,6 @@ public class ctrl : MonoBehaviour
             }
         }
 
-        // 
         UpdateAllObjs(true);
     }
 
@@ -261,7 +263,23 @@ public class ctrl : MonoBehaviour
             // 
             if (grabber[0].grabbedObject == null && grabber[1].grabbedObject == null)
             {
-                RawState(i);
+                if (TouchControls.Palm[0] || TouchControls.Palm[1])
+                {
+                    for (int j = 0; j < 2; j++)
+                    {
+                        if (TouchControls.Palm[j])
+                        {
+                            HideState(j);
+                        }
+
+                        lineRend[j].enabled = TouchControls.Palm[j];
+                    }
+                }
+                else
+                {
+                    // 
+                    RawState(i);
+                }
 
                 // 
                 if (frame > 0 && TouchControls.Index[1])
@@ -270,8 +288,56 @@ public class ctrl : MonoBehaviour
                 }
             }
 
-            // 
             ResetButtons(i);
+        }
+    }
+
+    void HideState(int i)
+    {
+        cam.backgroundColor = (Color.red + Color.white) / 2;
+
+        Vector3[] a = new Vector3[] { grabber[i].transform.position, grabber[i].transform.position + grabber[i].transform.forward + grabber[i].transform.up };
+
+        lineRend[i].SetPositions(a);
+
+        Ray r = new Ray(lineRend[i].transform.position, lineRend[i].transform.forward + lineRend[i].transform.up);
+        RaycastHit hit;
+
+        // 
+        if (Physics.Raycast(r, out hit))
+        {
+            if (hit.transform.tag == "Grab")
+            {
+                // 
+                grSel = hit.collider.gameObject;
+                sel.transform.position = grSel.transform.position;
+
+                // 
+                if (TouchControls.Top[i])
+                {
+                    OVRGrabbable gr = grSel.GetComponent<OVRGrabbable>();
+                    debutInfo = gr.name;
+                    // 
+                    MotionScene.motionObj[gr.id].ToggleHide(true);
+                }
+
+                // 
+                if (TouchControls.Bottom[i])
+                {
+                    OVRGrabbable gr = grSel.GetComponent<OVRGrabbable>();
+                    debutInfo = gr.name;
+                    // 
+                    MotionScene.motionObj[gr.id].ToggleHide(false);
+                }
+            }
+            else
+            {
+                sel.transform.position = Vector3.up * 10000;
+            }
+        }
+        else
+        {
+            sel.transform.position = Vector3.up * 10000;
         }
     }
 
@@ -284,7 +350,7 @@ public class ctrl : MonoBehaviour
         // if too small, delete
         if (meScale.localScale.x < .05f && meScale.localScale.y < .05f && meScale.localScale.z < .05f)
         {
-            //MotionScene.layer[theLayer].motionObj[grabber[i].grabbedObject.id].Delete();
+            //MotionScene.motionObj[grabber[i].grabbedObject.id].Delete();
         }
 
         // 
@@ -305,7 +371,7 @@ public class ctrl : MonoBehaviour
         {
             parent[i] = false;
 
-            StartParenting(grabber[i]);
+            StartParenting(i, grabber[i]);
         }
 
         // 
@@ -325,168 +391,82 @@ public class ctrl : MonoBehaviour
     void ResetButtons(int i)
     {
         // 
-        if (buttBottomReset[i] && TouchControls.Bottom[i])
-        {
-            buttBottomReset[i] = false;
-            mode = Mode.Play;
-            playFrame = frame;
-        }
-
-        // 
         if (!TouchControls.Bottom[i])
         {
             buttBottomReset[i] = true;
         }
 
-        // 
         if (!TouchControls.Index[i])
         {
             joyIndexReset[i] = true;
         }
 
-        // 
         if (!TouchControls.Top[i])
         {
             parent[i] = true;
         }
     }
 
+    IEnumerator ColorObjs(Renderer a, Renderer b)
+    {
+        Color currentA = a.material.color;
+        Color currentB = b.material.color;
+
+        a.material.color = Color.yellow;
+        b.material.color = Color.yellow;
+
+        yield return new WaitForSeconds(.5f);
+
+        a.material.color = currentA;
+        b.material.color = currentB;
+
+    }
+
     void RawState(int i)
     {
-        // 
-        if (TouchControls.Palm[0] || TouchControls.Palm[1])
+        lineRend[i].enabled = false;
+
+        // Create using left index
+        if (joyIndexReset[0] && (TouchControls.Index[0]))
         {
-            cam.backgroundColor = (Color.white + Color.red) / 2;
+            joyIndexReset[i] = false;
 
-            // 
-            if (TouchControls.Palm[i])
+            CreatePrimitive();
+        }
+
+        // 
+        float jlY = TouchControls.Joystick[0].y;
+
+        // 
+        if (Mathf.Abs(jlY) > 0)
+        {
+            if (joyAxisReset[0])
             {
-                if (lineHide[i] == null)
-                {
-                    lineHide[i] = DrawGrabberLine(grabber[i], lineWidth, lineCol);
-                }
-
-                Transform p = lineHide[i].transform;
-
-                Vector3[] a = new Vector3[] { p.position, p.position + p.transform.forward + p.up };
-
-                lineHide[i].SetPositions(a);
-
-                Ray r = new Ray(p.position, p.forward + p.up);
-                RaycastHit hit;
-                
-                // 
-                if (Physics.Raycast(r, out hit))
-                {
-                    if (hit.transform.tag == "Grab")
-                    {
-                        // 
-                        GameObject oSel = hit.collider.gameObject;
-                        sel.transform.position = oSel.transform.position;
-
-                    }
-                }
-                else
-                {
-                    sel.transform.position = Vector3.up * 10000;
-                }
-            }
-            else if (!TouchControls.Palm[i] && lineHide[i] != null)
-            {
-                Vector3[] a = new Vector3[] { Vector3.zero, Vector3.zero };
-
-                lineHide[i].SetPositions(a);
+                joyAxisReset[0] = false;
+                uiLoc -= (int)Mathf.Sign(jlY);
+                uiLoc = Mathf.Clamp(uiLoc, 0, 4);
             }
         }
-        else
+        else if (jlY == 0)
         {
-            if (lineHide[i] != null)
-            {
-                Destroy(lineHide[i]);
-            }
+            joyAxisReset[0] = true;
+            axisHold[0].y = 0;
+        }
 
-            // Create using left index
-            if (joyIndexReset[0] && (TouchControls.Index[0]))
-            {
-                joyIndexReset[i] = false;
+        // Frame manipulation
+        float jrX = TouchControls.Joystick[1].x;
 
-                CreatePrimitive();
-            }
-
-            // 
-            float jlY = TouchControls.Joystick[0].y;
-
-            if (Mathf.Abs(jlY) > 0)
-            {
-                if (joyAxisReset[0])
-                {
-                    joyAxisReset[0] = false;
-                    uiLoc -= (int)Mathf.Sign(jlY);
-                    uiLoc = Mathf.Clamp(uiLoc, 0, 4);
-                }
-            }
-            else if (jlY == 0)
-            {
-                joyAxisReset[0] = true;
-                axisHold[0].y = 0;
-            }
-
-            // Frame manipulation
-            float jrX = TouchControls.Joystick[1].x;
+        // 
+        if (Mathf.Abs(jrX) > 0)
+        {
+            axisHold[1].x += Time.deltaTime;
 
             // 
-            if (Mathf.Abs(jrX) > 0)
+            if (joyAxisReset[1])
             {
-                axisHold[1].x += Time.deltaTime;
+                joyAxisReset[1] = false;
 
                 // 
-                if (joyAxisReset[1])
-                {
-                    joyAxisReset[1] = false;
-
-                    // 
-                    if (uiLoc == 0)
-                    {
-                        frame += (int)Mathf.Sign(jrX);
-                        frame = Mathf.Clamp(frame, 0, lastFrame - 1);
-                        UpdateAllObjs(false);
-                    }
-                    else if (uiLoc == 1)
-                    {
-                        theLayer += (int)Mathf.Sign(jrX);
-                        theLayer = Mathf.Clamp(theLayer, 0, maxLayers);
-                    }
-                    else if (uiLoc == 2)
-                    {
-                        fps += (int)Mathf.Sign(jrX);
-                        fps = Mathf.Clamp(fps, 1, 120);
-                    }
-                    else if (uiLoc == 3)
-                    {
-                        lastFrame += (int)Mathf.Sign(jrX);
-                        lastFrame = Mathf.Clamp(lastFrame, 1, 1000);
-                    }
-                    else if (uiLoc == 4)
-                    {
-                        pType += (int)Mathf.Sign(jrX);
-                        pType = Mathf.Clamp(pType, 0, pTypes.Length - 1);
-                    }
-                    else if (uiLoc == 5)
-                    {
-                        col += (int)Mathf.Sign(jrX);
-                        col = Mathf.Clamp(col, 0, cols.Length - 1);
-                    }
-                }
-            }
-            else if (jrX == 0)
-            {
-                joyAxisReset[1] = true;
-                axisHold[1].x = 0;
-            }
-
-            // 
-            if (axisHold[1].x > lean)
-            {
                 if (uiLoc == 0)
                 {
                     frame += (int)Mathf.Sign(jrX);
@@ -503,18 +483,64 @@ public class ctrl : MonoBehaviour
                     lastFrame += (int)Mathf.Sign(jrX);
                     lastFrame = Mathf.Clamp(lastFrame, 1, 1000);
                 }
+                else if (uiLoc == 3)
+                {
+                    pType += (int)Mathf.Sign(jrX);
+                    pType = Mathf.Clamp(pType, 0, pTypes.Length - 1);
+                }
+                else if (uiLoc == 4)
+                {
+                    col += (int)Mathf.Sign(jrX);
+                    col = Mathf.Clamp(col, 0, cols.Length - 1);
+                }
             }
         }
-    }
-
-    void UpdateAllObjs(bool onion)
-    {
-        for (int i = 0; i < MotionScene.layer[theLayer].motionObj.Count; i++)
+        else if (jrX == 0)
         {
-            MotionScene.layer[theLayer].motionObj[i].MoveObj(frame, updateOS: true, noOnion: onion);
+            joyAxisReset[1] = true;
+            axisHold[1].x = 0;
+        }
+
+        // 
+        if (axisHold[1].x > lean)
+        {
+            if (uiLoc == 0)
+            {
+                frame += (int)Mathf.Sign(jrX);
+                frame = Mathf.Clamp(frame, 0, lastFrame - 1);
+                UpdateAllObjs(false);
+            }
+            else if (uiLoc == 1)
+            {
+                fps += (int)Mathf.Sign(jrX);
+                fps = Mathf.Clamp(fps, 1, 120);
+            }
+            else if (uiLoc == 2)
+            {
+                lastFrame += (int)Mathf.Sign(jrX);
+                lastFrame = Mathf.Clamp(lastFrame, 1, 1000);
+            }
+        }
+
+        // 
+        if (buttBottomReset[i] && TouchControls.Bottom[i])
+        {
+            buttBottomReset[i] = false;
+            mode = Mode.Play;
+            playFrame = frame;
         }
     }
 
+    // 
+    void UpdateAllObjs(bool onion)
+    {
+        for (int i = 0; i < MotionScene.motionObj.Count; i++)
+        {
+            MotionScene.motionObj[i].MoveObj(frame, updateOS: true, noOnion: onion);
+        }
+    }
+
+    // 
     GameObject CreatePrimitive(bool copy = false, int hand = -1)
     {
         GameObject g = null;
@@ -535,6 +561,7 @@ public class ctrl : MonoBehaviour
 
             // change the color to be the appropriate color chosen
             Renderer r = g.GetComponent<Renderer>();
+            r.material = Resources.Load<Material>("red");
             r.material.color = cols[col];
 
             // Remove the physics, unfortunately we still need rigidbody for collisions
@@ -560,7 +587,7 @@ public class ctrl : MonoBehaviour
         MotionObject mO = new MotionObject(g, 1000);
 
         // Add that Motion Object to the Motion Scene
-        MotionScene.layer[theLayer].motionObj.Add(mO);
+        MotionScene.motionObj.Add(mO);
 
         return g;
     }
