@@ -22,6 +22,7 @@ public class MotionObject
         _oSkinP = new GameObject[ctrl.oSkinCount];
         _oSkinN = new GameObject[ctrl.oSkinCount];
 
+        // 
         for (int i = 0; i < ctrl.oSkinCount; i++)
         {
             CreateOnion(new Color(1, 0, 0, .25f / (i + 1)), ref _oSkinP[i]);
@@ -110,7 +111,7 @@ public class MotionObject
         }
     }
 
-    private void HideOnions()
+    void HideOnions()
     {
         for (int i = 0; i < ctrl.oSkinCount; i++)
         {

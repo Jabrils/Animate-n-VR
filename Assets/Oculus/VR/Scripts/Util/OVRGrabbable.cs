@@ -40,7 +40,7 @@ public class OVRGrabbable : MonoBehaviour
     bool highlighted => ctrl.sel.transform.position == transform.position && (TouchControls.Palm[0] || TouchControls.Palm[1]);
     Renderer rend;
     Color col;
-    Color colCal => new Color(col.r, col.b, col.b, (self.hide ? .6f : 1));
+    Color colCal => new Color(col.r, col.g, col.b, (self.hide ? .6f : 1));
     MotionObject self => MotionScene.motionObj[id];
     float a = 1;
 
@@ -151,7 +151,7 @@ public class OVRGrabbable : MonoBehaviour
             }
             else
             {
-                rend.material.color = colCal; 
+                rend.material.color = colCal;
             }
         }
         else if (ctrl.mode == ctrl.Mode.Animate)
@@ -189,9 +189,11 @@ public class OVRGrabbable : MonoBehaviour
 
     protected virtual void Start()
     {
+        col = ctrl.cols[ctrl.col];
         m_grabbedKinematic = GetComponent<Rigidbody>().isKinematic;
         rend = GetComponent<Renderer>();
-        col = rend.material.color;
+        rend.material = Resources.Load<Material>("red");
+        rend.material.color = col;
     }
 
     void OnDestroy()

@@ -559,11 +559,6 @@ public class ctrl : MonoBehaviour
             // tag it
             g.tag = "Grab";
 
-            // change the color to be the appropriate color chosen
-            Renderer r = g.GetComponent<Renderer>();
-            r.material = Resources.Load<Material>("red");
-            r.material.color = cols[col];
-
             // Remove the physics, unfortunately we still need rigidbody for collisions
             Rigidbody rb = g.AddComponent<Rigidbody>();
             rb.isKinematic = true;

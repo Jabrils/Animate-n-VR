@@ -44,7 +44,7 @@ public class master : MonoBehaviour
         txt_Rate.text = $"FPS: {ctrl.fps}";
         txt_Last.text = $"Last Frame: {ctrl.lastFrame}";
         txt_Geo.text = $"Geometry: {ctrl.pTypes[ctrl.pType]}";
-        txt_Color.text = $"Color: Blue";
+        txt_Color.text = $"Color: {cols[ctrl.col]}";
 
         txt_Scale.text = $"Scaling: {scal[ctrl.scaleAxis]}";
         txt_Debug.text = $"Debug: {ctrl.debutInfo}";
