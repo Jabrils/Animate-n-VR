@@ -1535,4 +1535,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/Main.unity
   - Assets/Oculus/VR/Scenes/Cubes.unity
-  playerPath: G:/Unity/Flash VR/Builds
+  playerPath: G:/Unity/Flash VR/Official Build/Animate n VR.apk

@@ -33,6 +33,7 @@ public class MotionObject
     public void ToggleHide(bool w)
     {
         _hide = w;
+        //self.GetComponent<OVRGrabbable>().ChangeRenderMode(!w);
     }
 
     void CreateOnion(Color mainCol, ref GameObject gO)

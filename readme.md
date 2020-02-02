@@ -1,4 +1,4 @@
-## Animate 'n' VR - v0.0.7
+## Animate 'n' VR - v0.1.0
 
 - add more button resets if needing to stop button spamming
 

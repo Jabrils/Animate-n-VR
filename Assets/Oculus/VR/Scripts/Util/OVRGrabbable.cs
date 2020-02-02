@@ -40,9 +40,10 @@ public class OVRGrabbable : MonoBehaviour
     bool highlighted => ctrl.sel.transform.position == transform.position && (TouchControls.Palm[0] || TouchControls.Palm[1]);
     Renderer rend;
     Color col;
-    Color colCal => new Color(col.r, col.g, col.b, (self.hide ? .6f : 1));
+    Color colCal => self.hide ? Color.white : col;
     MotionObject self => MotionScene.motionObj[id];
     float a = 1;
+    Texture2D txtHide;
 
     public int id;
 
@@ -143,6 +144,8 @@ public class OVRGrabbable : MonoBehaviour
 
     void Update()
     {
+        rend.material.mainTexture = self.hide ? txtHide : null;
+
         if (ctrl.mode == ctrl.Mode.Parenting)
         {
             if (selected)
@@ -192,8 +195,15 @@ public class OVRGrabbable : MonoBehaviour
         col = ctrl.cols[ctrl.col];
         m_grabbedKinematic = GetComponent<Rigidbody>().isKinematic;
         rend = GetComponent<Renderer>();
-        rend.material = Resources.Load<Material>("red");
+        rend.material = Resources.Load<Material>("red 1");
         rend.material.color = col;
+        ChangeRenderMode(true);
+        txtHide = Resources.Load<Texture2D>("hide");
+    }
+
+    public void ChangeRenderMode(bool opaque)
+    {
+        rend.material.SetFloat("_Mode", opaque ? 0 : 1);
     }
 
     void OnDestroy()
