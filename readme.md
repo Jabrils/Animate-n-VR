@@ -23,4 +23,4 @@
 |0.0.5|01.23.020|Added a copy object feature
 |0.0.5|01.23.020|Fixed Onion Skinning Color
 |0.0.4|01.23.020|Fixed Parenting / Scaling for frame by frame animating
-|0.0.3|01.22.020|Improved parenting to better know what youre trying to parent to
+|0.0.3|01.22.020|Improved parenting to better know what you're trying to parent to
